@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Baby</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body{
+  margin:0;
+  padding:0;
+  font-family:'Roboto', sans-serif;
+  background: linear-gradient(180deg,#ffb6c1,#ff69b4,#ffd1dc);
+  color:white;
+  text-align:center;
+  width:100%;
+  height:100vh;
+  overflow-x:hidden;
+  overflow-y:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+
+/* screens */
+.screen{
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:100vh;
+}
+
+/* Start Button */
+button{
+  padding:30px 70px;
+  font-size:40px;
+  border:none;
+  border-radius:50px;
+  background:#ff69b4;
+  color:white;
+  cursor:pointer;
+}
+
+/* Text lines */
+.line{
+  font-size:36px;
+  margin:22px 0;
+  opacity:0;
+  animation:fade 2.5s forwards;
+  font-family:'Pacifico', cursive;
+}
+
+/* Fade animation */
+@keyframes fade{
+  to{opacity:1;}
+}
+
+/* Glow name */
+.glow{
+  font-size:90px;
+  font-weight:bold;
+  animation:glow 2s infinite alternate;
+  font-family:'Pacifico', cursive;
+}
+
+/* Message container */
+#message{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  padding:50px 20px;
+  box-sizing:border-box;
+  overflow-y:auto;
+  scroll-behavior:smooth;
+}
+
+/* Candle & Cake */
+.emoji{
+  font-size:120px;
+  margin:20px 0;
+}
+
+.cake-img{
+  width:300px;
+  max-width:80%;
+  height:auto;
+  border-radius:20px;
+  box-shadow:0 0 30px pink;
+  margin:20px 0;
+}
+
+/* Photo */
+.photo{
+  width:380px;
+  height:380px;
+  border-radius:50%;
+  object-fit:cover;
+  border:6px solid white;
+  box-shadow:0 0 40px hotpink;
+  margin:40px 0;
+}
+
+/* Hearts */
+.heart{
+  position:fixed;
+  bottom:-40px;
+  font-size:30px;
+  animation:float linear infinite;
+}
+
+@keyframes float{
+  to{transform:translateY(-110vh);opacity:0;}
+}
+</style>
+</head>
+<body>
+
+<!-- START -->
+<div id="start" class="screen" style="display:flex;">
+  <button onclick="start()">Tap to start 💗</button>
+</div>
+
+<!-- COUNTDOWN -->
+<div id="countdown" class="screen"></div>
+
+<!-- CANDLE -->
+<div id="candle" class="screen"></div>
+
+<!-- CAKE -->
+<div id="cake" class="screen"></div>
+
+<!-- LINES -->
+<div id="message" class="screen"></div>
+
+<!-- FINAL -->
+<div id="final" class="screen">
+  <div class="glow">HANDSOME</div>
+  <div class="line" style="opacity:1;font-size:40px;margin-top:10px;">
+    My Baby • My Purushaa • My Chellam ❤️
+  </div>
+  <img src="akthar.jpeg" class="photo">
+  <div class="line" style="opacity:1;font-size:38px;">
+    Forever yours, Beautiful Future Wife baby 💖
+  </div>
+</div>
+
+<script>
+// LINES
+const lines = [
+"Today is not just a birthday 💖",
+"It is the day my favorite human was born",
+"Before 27 — you were learning life",
+"Falling, rising, becoming stronger",
+"Before 27 — you loved me through everything",
+"Today you turn 27 🎉",
+"27 years of strength",
+"27 years of kindness",
+"27 years of being YOU",
+"After 27 — I see growth",
+"More success, more peace",
+"And me… holding your hand always",
+"I do not have expensive gifts",
+"But I give you my time, my effort",
+"My loyalty, my patience, my heart",
+"You are my comfort",
+"My safe place",
+"My forever",
+"Happy Birthday Dear LOVE ❤️"
+];
+
+// START
+function start(){
+  hideAll();
+  document.getElementById("countdown").style.display="flex";
+  hearts();
+  countdown(5);
+}
+
+// COUNTDOWN
+function countdown(n){
+  const c = document.getElementById("countdown");
+  c.innerHTML = `<div class="line" style="font-size:120px;opacity:1">${n}</div>`;
+  if(n > 0){
+    setTimeout(()=>countdown(n-1),1000);
+  }else{
+    setTimeout(showCandle,1000);
+  }
+}
+
+// SHOW CANDLE
+function showCandle(){
+  hideAll();
+  const c = document.getElementById("candle");
+  c.style.display="flex";
+  c.innerHTML = `<div class="emoji">🕯️</div><div class="line" style="opacity:1;font-size:36px;">Close your eyes…</div>`;
+  setTimeout(blowCandle,1500);
+}
+
+// BLOW CANDLE & SHOW CAKE
+function blowCandle(){
+  const c = document.getElementById("candle");
+  c.innerHTML = `<div class="emoji">😮‍💨</div><div class="line" style="opacity:1;font-size:36px;">Make a wish, my love…</div>`;
+  setTimeout(showCake,1500);
+}
+
+function showCake(){
+  hideAll();
+  const cake = document.getElementById("cake");
+  cake.style.display="flex";
+  cake.innerHTML = `<img src="cake.jpg" class="cake-img">`;
+  setTimeout(showLines,2000);
+}
+
+// SHOW LINES
+function showLines(){
+  hideAll();
+  const container = document.getElementById("message");
+  container.style.display="flex";
+  lines.forEach((text,i)=>{
+    const d = document.createElement("div");
+    d.className="line";
+    d.style.animationDelay = `${i*2.8}s`;
+    d.innerText = text;
+    container.appendChild(d);
+    setTimeout(()=>{
+      d.scrollIntoView({behavior:"smooth"});
+    }, i*2800);
+  });
+  setTimeout(showFinal, lines.length*2800 + 1000);
+}
+
+// SHOW FINAL PHOTO
+function showFinal(){
+  hideAll();
+  document.getElementById("final").style.display="flex";
+}
+
+// HIDE ALL SCREENS
+function hideAll(){
+  document.querySelectorAll(".screen").forEach(s=>s.style.display="none");
+}
+
+// HEARTS
+function hearts(){
+  setInterval(()=>{
+    const h = document.createElement("div");
+    h.className="heart";
+    h.innerText="💗";
+    h.style.left = Math.random()*100+"vw";
+    h.style.animationDuration = (4+Math.random()*3)+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),7000);
+  },300);
+}
+</script>
+
+</body>
+</html>
